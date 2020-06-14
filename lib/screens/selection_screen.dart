@@ -232,7 +232,7 @@ class _ChoiceButtonState extends State<ChoiceButton> {
               });
               await Provider.of<Choice>(context, listen: false).addChoice(
                 widget.selection.items.values.toList(),
-                widget.selection.totalSws,
+                //widget.selection.totalSws,
               );
               setState(() {
                 _isLoading = false;

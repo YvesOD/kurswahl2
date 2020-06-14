@@ -7,15 +7,19 @@ import 'selection.dart';
 
 class ChoiceItem {
   final String id;
-  final int sws;
+  //final int sws;
   final List<SelectionItem> courses;
   final DateTime dateTime;
+ // final int prio;
+ // final String category;
 
   ChoiceItem({
     @required this.id,
-    @required this.sws,
+    //@required this.sws,
     @required this.courses,
     @required this.dateTime,
+   // @required this.prio,
+   // @required this.category,
   });
 }
 
@@ -52,13 +56,15 @@ class Choice with ChangeNotifier {
     extractedData.forEach((choiceId, choiceData) {
       loadedChoice.add(ChoiceItem(
         id: choiceId,
-        sws: choiceData['sws'],
+        //sws: choiceData['sws'],
         dateTime: DateTime.parse(choiceData['dateTime']),
         courses: (choiceData['courses'] as List<dynamic>)
             .map((item) => SelectionItem(
                   id: item['id'],
                   sws: item['sws'],
                   title: item['title'],
+                  prio: item['prio'],
+                  category: item['category'],
                 ))
             .toList(),
       ));
@@ -68,7 +74,8 @@ class Choice with ChangeNotifier {
   }
 
   Future<void> addChoice(
-      List<SelectionItem> selectionCourses, int totalSws) async {
+      //List<SelectionItem> selectionCourses, int totalSws) async {
+      List<SelectionItem> selectionCourses) async {
     //ToDo: Adjust url (project of GCP)
     final url =
         'https://honolulu-2020.firebaseio.com/choices/$userId.json?auth=$authToken';
@@ -76,13 +83,15 @@ class Choice with ChangeNotifier {
     final response = await http.post(
       url,
       body: json.encode({
-        'sws': totalSws,
+        //'sws': totalSws,
         'dateTime': timestamp.toIso8601String(),
         'courses': selectionCourses
             .map((selCourse) => {
                   'id': selCourse.id,
                   'title': selCourse.title,
                   'sws': selCourse.sws,
+                  'prio': selCourse.prio,
+                  'category': selCourse.category,
                 })
             .toList(),
       }),
@@ -93,7 +102,7 @@ class Choice with ChangeNotifier {
         ChoiceItem(
           //id: DateTime.now().toString(),
           id: json.decode(response.body)['name'],
-          sws: totalSws,
+          //sws: totalSws,
           dateTime: timestamp,
           courses: selectionCourses,
         ));

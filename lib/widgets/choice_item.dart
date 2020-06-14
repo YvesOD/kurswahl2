@@ -22,13 +22,13 @@ class _ChoiceItemState extends State<ChoiceItem> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       height:
-      _expanded ? min(widget.choice.courses.length * 20.0 + 110, 200) : 95,
+      _expanded ? min(widget.choice.courses.length * 20.0 + 120, 420) : 95,
       child: Card(
         margin: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text('€ ${widget.choice.sws.toString()}'),
+              //title: Text('€ ${widget.choice.sws.toString()}'),
               subtitle: Text(
                 DateFormat('dd.MM.yyyy hh:mm').format(widget.choice.dateTime),
               ),
@@ -48,23 +48,24 @@ class _ChoiceItemState extends State<ChoiceItem> {
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
 //              height: min(widget.order.products.length * 20.0 + 10, 100),
               height: _expanded
-                  ? min(widget.choice.courses.length * 20.0 + 10, 100)
+                  ? min(widget.choice.courses.length * 20.0 + 20, 320)
                   : 0,
               child: ListView(
                 children: widget.choice.courses
                     .map(
-                      (prod) => Row(
+                      (course) => Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        prod.title,
+                        course.title,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        '${prod.sws} SWS',
+                        //'Prio ${course.prio}',
+                        '${course.category}',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey,
